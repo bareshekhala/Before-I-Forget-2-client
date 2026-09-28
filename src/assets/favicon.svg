@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="67 73.4 378 378">
+  <style>@media (prefers-color-scheme: dark) { .page { fill: #9DB8FF } .fold { fill: #F4C24A } }</style>
+  <path class="page" d="M253 392C201 358 141 350 77 362V138C141 126 201 134 253 168Z" fill="#1D4FD7"/>
+  <path class="page" d="M259 392C311 358 371 350 435 362V253.6L321.5 140.2C299.7 145.9 278.8 155.1 259 168Z" fill="#1D4FD7"/>
+  <path class="fold" d="M321.5 140.2L435 253.6H319.4Z" fill="#E09A12"/>
+</svg>

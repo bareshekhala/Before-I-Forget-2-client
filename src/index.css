@@ -1,5 +1,194 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+
+    /* all text */
+    --font-sans: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif; 
+
+
+    /* big titles */
+    --font-display: "Anybody", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;           
+
+    /* day */
+    --color-ground: #f3f6fc;          
+    --color-ink: #0d1b3e;           
+    --color-ink-soft: #3e4f78; 
+
+    /* night */
+    --color-night: #0a1230;           
+    --color-night-surface: #15214d;   
+    --color-night-ink: #eef2fc;      
+    --color-night-ink-soft: #bcc7e6;
+
+    --color-cobalt: #1d4fd7;          
+    --color-night-cobalt: #9db8ff;   
+    --color-sun: #f4c24a;             
+
+    --color-success: #1e7a4e;
+    --color-night-success: #7eddaf;
+    --color-danger: #b42318;
+    --color-night-danger: #ff9a8f;
+}
+
+
+/*shadcn colours */
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+}
+
+
+
+@layer base {
+    html {
+        @apply font-sans;
+    }
+
+    /* scrollbars and browser controls turn dark too */
+    .dark {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+
+        .dark & {
+            @apply bg-night text-night-ink;
+        }
+    }
+
+    * {
+        @apply border-border outline-ring/50;
+    }
+}
+
+
+
+/* secondary text */
+@utility text-soft {
+    @apply text-ink-soft;
+
+    .dark & {
+        @apply text-night-ink-soft;
+    }
+}
+
+/* glass like */
+@utility glass {
+    @apply rounded-3xl border border-white/80 bg-white/50 bg-linear-to-b from-white/55 to-transparent to-60%;
+    @apply backdrop-blur-2xl backdrop-saturate-150;
+    box-shadow:
+        0 1px 1px rgb(13 27 62 / 0.05),
+        0 20px 44px -20px rgb(13 27 62 / 0.38),
+        inset 0 1px 0 rgb(255 255 255 / 0.95);
+
+    .dark & {
+        @apply border-white/15 bg-night-surface/55 from-white/5;
+        box-shadow:
+            0 1px 1px rgb(0 0 0 / 0.25),
+            0 24px 54px -22px rgb(0 0 0 / 0.75),
+            inset 0 1px 0 rgb(255 255 255 / 0.1);
+    }
+}
+
+
+/* this part can be used for Auth form parts */
+
+/* for Label */
+.field-label {
+    @apply text-sm font-semibold text-ink;
+
+    .dark & {
+        @apply text-night-ink;
+    }
+}
+
+/* for Input */
+.field {
+    @apply h-12 rounded-xl border border-ink-soft/60 bg-white px-4 text-base text-ink placeholder:text-ink-soft/70;
+    @apply focus-visible:border-cobalt focus-visible:ring-4 focus-visible:ring-cobalt/20;
+
+    .dark & {
+        @apply border-night-ink-soft/50 bg-night-surface text-night-ink placeholder:text-night-ink-soft/70;
+        @apply focus-visible:border-night-cobalt focus-visible:ring-night-cobalt/20;
+    }
+}
+
+/* buttons */
+.btn-primary {
+    @apply h-12 w-full rounded-full bg-cobalt px-5 text-base font-semibold text-white hover:bg-cobalt/90;
+    @apply focus-visible:ring-4 focus-visible:ring-cobalt/30 disabled:opacity-70;
+
+    .dark & {
+        @apply bg-sun text-ink hover:bg-sun/90 focus-visible:ring-night-cobalt/30;
+    }
+}
+
+/* for Link */
+.text-link {
+    @apply font-semibold text-ink underline decoration-sun decoration-2 underline-offset-4;
+
+    .dark & {
+        @apply text-night-ink;
+    }
+}
+
+/* for error alert */
+.form-error {
+    @apply flex items-start gap-2 text-sm font-medium text-danger;
+
+    .dark & {
+        @apply text-night-danger;
+    }
+}
+
+/* for success alert */
+.form-success {
+    @apply flex items-start gap-2 text-sm font-medium text-success;
+
+    .dark & {
+        @apply text-night-success;
+    }
+}
