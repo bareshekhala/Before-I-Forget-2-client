@@ -54,7 +54,7 @@ const handleDelete = async()=>{
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel variant="outline" disabled={busy}>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={handleDelete} disabled={busy} >Delete
+          <AlertDialogAction variant="destructive" onClick={handleDelete} disabled={busy} >
             {busy ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

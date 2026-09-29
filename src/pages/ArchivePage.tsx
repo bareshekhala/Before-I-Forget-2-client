@@ -7,10 +7,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
 
 function ArchivePage() {
   return (
-
-    <Tabs defaultValue="All">
-      <TabsList>
-        <TabsTrigger value="All">All</TabsTrigger>
+<div className=" ">
+    <Tabs className="" defaultValue="All">
+      <TabsList className="glass mx-auto w-200 mt-40">
+        <TabsTrigger  value="All">All</TabsTrigger>
         <TabsTrigger value="Books">Books</TabsTrigger>
         <TabsTrigger value="Movies">Movies</TabsTrigger>
         <TabsTrigger value="Songs">Songs</TabsTrigger>
@@ -19,6 +19,7 @@ function ArchivePage() {
         <TabsTrigger value="Dreams">Dreams</TabsTrigger>
         <TabsTrigger value="Thoughts">Thoughts</TabsTrigger>
       </TabsList>
+      <div className="min-h-screen">
       <TabsContent value="All">
         <FavBooks/>
       </TabsContent>
@@ -34,8 +35,9 @@ function ArchivePage() {
       {/* <TabsContent value="Websites">
         <FavBooks/>
       </TabsContent> */}
-
+</div>
     </Tabs>
+    </div>
   )
 }
 
