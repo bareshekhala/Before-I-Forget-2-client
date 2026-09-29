@@ -2,7 +2,7 @@
 import axios from "axios"
 import { supabase } from "@/lib/superBaseClient"
 
-const service = axios.create({baseURL: `$(import.meta.VITE_API_URL)/api`})
+const service = axios.create({baseURL: `${import.meta.env.VITE_API_URL}/api`})
 
 // here we also get the token from superbase and sent it to the backend -> the backend then verify if this token is real or valid
 // in here our token does not come from our local storage anymore -> but from the superbase
