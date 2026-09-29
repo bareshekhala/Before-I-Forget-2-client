@@ -1,3 +1,5 @@
+//signUp and logIn pages have similiar appearences => we can make a template and then tailer it for each page
+
 import type { ReactNode } from "react";
 import day from "../../assets/day.png"
 import night from "../../assets/night.png";
