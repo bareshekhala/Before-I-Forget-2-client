@@ -26,19 +26,17 @@ import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { categories } from "./Categories";
 
-type BookEditProps = {
-favbookId: string;
+type MovieEditProps = {
+favmovieId: string;
 onUpdated: () => void;
 };
 
-function BookEdit({ favbookId, onUpdated }: BookEditProps) {
+function MovieEdit({ favmovieId, onUpdated }: MovieEditProps) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [pageCount, setPageCount] = useState("");
+  const [poster_path, setPoster_path] = useState("");
+  const [overview, setOverview] = useState("");
   const [moods, setMoods] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -50,13 +48,11 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
     setErrorMessage(null);
 
     try {
-      const response = await service.get(`/books/favbooks/${favbookId}`);
+      const response = await service.get(`/movies/favmovies/${favmovieId}`);
       setTitle(response.data.title);
-      setAuthor(response.data.author ?? "");
       setCategory(response.data.category);
-      setImage(response.data.image ?? "");
-      setDescription(response.data.description ?? "");
-      setPageCount(response.data.pageCount ?? "");
+      setPoster_path(response.data.image ?? "");
+      setOverview(response.data.description ?? "");
       setMoods(response.data.moods.map((mood: { name: string }) => mood.name));
 
       setIsLoading(false);
@@ -66,7 +62,7 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
       setErrorMessage("Could not load this book, please try again.");
     }
   };
-  // whenever we click on the edit button, we call this function => we get the data of that specific book
+
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) getData();
     setOpen(isOpen);
@@ -82,15 +78,13 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
     setBusy(true);
     const body = {
       title,
-      author,
-      image,
+      poster_path,
       category,
-      pageCount,
-      description,
+      overview,
       moods,
     };
     try {
-      await service.patch(`/books/favbooks/${favbookId}`, body);
+      await service.patch(`/movies/favmovies/${favmovieId}`, body);
       setBusy(false);
       setOpen(false);
       onUpdated();
@@ -108,7 +102,7 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
       <DialogContent className="max-h-[calc(100svh-2rem)] gap-5 overflow-y-auto rounded-3xl bg-white p-6 text-ink sm:max-w-lg sm:p-8 dark:bg-night-surface dark:text-night-ink">
         <DialogHeader>
           <DialogTitle className="font-display text-3xl font-bold tracking-tight text-ink dark:text-night-ink">
-            Edit book
+            Edit Movie
           </DialogTitle>
         </DialogHeader>
 
@@ -130,36 +124,6 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
                 required
                 className="field"
               />
-            </div>
-
-            <div className="grid gap-5 sm:grid-cols-[1fr_8rem]">
-              <div className="grid gap-2">
-                <Label htmlFor="edit-author" className="field-label">
-                  Author
-                </Label>
-                <Input
-                  id="edit-author"
-                  type="text"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  className="field"
-                />
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="edit-pages" className="field-label">
-                  Pages
-                </Label>
-                <Input
-                  id="edit-pages"
-                  type="number"
-                  inputMode="numeric"
-                  min={1}
-                  value={pageCount}
-                  onChange={(e) => setPageCount(e.target.value)}
-                  className="field"
-                />
-              </div>
             </div>
 
             <div className="grid gap-2">
@@ -189,26 +153,26 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
 
             <div className="grid gap-2">
               <Label htmlFor="edit-image" className="field-label">
-                Image URL
+                Poster URL
               </Label>
               <Input
                 id="edit-image"
                 type="url"
                 placeholder="https://"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={poster_path}
+                onChange={(e) => setPoster_path(e.target.value)}
                 className="field"
               />
             </div>
 
             <div className="grid gap-2">
               <Label htmlFor="edit-description" className="field-label">
-                Description
+                Overview
               </Label>
               <Textarea
                 id="edit-description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={overview}
+                onChange={(e) => setOverview(e.target.value)}
                 className="field h-auto! min-h-28 py-3"
               />
             </div>
@@ -247,4 +211,4 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
   );
 }
 
-export default BookEdit;
+export default MovieEdit;

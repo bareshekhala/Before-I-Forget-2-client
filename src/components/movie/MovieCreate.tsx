@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert, LoaderCircle } from "lucide-react";
-import Loader from "../Loader";
+import { CircleAlert, LoaderCircle, Plus } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -24,94 +23,80 @@ import service from "@/services/service.index";
 import MoodChecked from "../forAll/MoodChecked";
 import React, { useState } from "react";
 import { Label } from "../ui/label";
-import { categories } from "./Categories";
+import { categories } from "../book/Categories";
+import Loader from "../Loader";
 
-type BookEditProps = {
-favbookId: string;
-onUpdated: () => void;
+type MovieCreateProps = {
+  onCreated: () => void;
 };
 
-function BookEdit({ favbookId, onUpdated }: BookEditProps) {
+function MovieCreate({ onCreated }: MovieCreateProps) {
+
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [pageCount, setPageCount] = useState("");
+  const [poster_path, setPoster_path] = useState("");
+  const [overview, setOverview] = useState("");
   const [moods, setMoods] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-
-  const getData = async () => {
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    try {
-      const response = await service.get(`/books/favbooks/${favbookId}`);
-      setTitle(response.data.title);
-      setAuthor(response.data.author ?? "");
-      setCategory(response.data.category);
-      setImage(response.data.image ?? "");
-      setDescription(response.data.description ?? "");
-      setPageCount(response.data.pageCount ?? "");
-      setMoods(response.data.moods.map((mood: { name: string }) => mood.name));
-
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      setErrorMessage("Could not load this book, please try again.");
-    }
-  };
-  // whenever we click on the edit button, we call this function => we get the data of that specific book
-  const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen) getData();
-    setOpen(isOpen);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
     if (!title || !category || moods.length === 0) {
-      setErrorMessage("Please Fill out the Titel and Choose at least one Mood");
+      setErrorMessage(
+        "Please fill out the title and category, and choose at least one mood");
       return;
     }
     setBusy(true);
+    setIsLoading(true);
+
     const body = {
       title,
-      author,
-      image,
+      poster_path,
       category,
-      pageCount,
-      description,
+      overview,
       moods,
     };
     try {
-      await service.patch(`/books/favbooks/${favbookId}`, body);
+      await service.post("/movies/favmovies", body)
+      //with these we make the form empty again => when the user open the create form again, it will be empty -> otherwise it will be filled with the prev data
+      setTitle("");
+      setCategory("");
+      setPoster_path("");
+      setOverview("");
+      setMoods([]);
+      onCreated();
       setBusy(false);
       setOpen(false);
-      onUpdated();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setBusy(false);
       setErrorMessage("Something went wrong, please try again.");
+      setIsLoading(false);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger render={<Button variant="outline">Edit</Button>} />
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
+        render={
+          <Button className="btn-primary w-auto! gap-2">
+            <Plus className="size-5" />
+            Add a Movie
+          </Button>
+        }
+      />
 
       <DialogContent className="max-h-[calc(100svh-2rem)] gap-5 overflow-y-auto rounded-3xl bg-white p-6 text-ink sm:max-w-lg sm:p-8 dark:bg-night-surface dark:text-night-ink">
         <DialogHeader>
           <DialogTitle className="font-display text-3xl font-bold tracking-tight text-ink dark:text-night-ink">
-            Edit book
+            Add a Movie
           </DialogTitle>
         </DialogHeader>
-
         {isLoading ? (
           <div className="grid place-items-center py-16">
             <Loader size={64} />
@@ -119,11 +104,11 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
         ) : (
           <form onSubmit={handleFormSubmit} className="grid gap-5">
             <div className="grid gap-2">
-              <Label htmlFor="edit-title" className="field-label">
+              <Label htmlFor="create-title" className="field-label">
                 Title
               </Label>
               <Input
-                id="edit-title"
+                id="create-title"
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -132,38 +117,9 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
               />
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-[1fr_8rem]">
-              <div className="grid gap-2">
-                <Label htmlFor="edit-author" className="field-label">
-                  Author
-                </Label>
-                <Input
-                  id="edit-author"
-                  type="text"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  className="field"
-                />
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="edit-pages" className="field-label">
-                  Pages
-                </Label>
-                <Input
-                  id="edit-pages"
-                  type="number"
-                  inputMode="numeric"
-                  min={1}
-                  value={pageCount}
-                  onChange={(e) => setPageCount(e.target.value)}
-                  className="field"
-                />
-              </div>
-            </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="edit-category" className="field-label">
+              <Label htmlFor="create-category" className="field-label">
                 Category
               </Label>
               <Select
@@ -171,8 +127,8 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
                 value={category}
                 onValueChange={(value) => setCategory(value ?? "")}
               >
-                <SelectTrigger id="edit-category" className="field w-full">
-                  <SelectValue />
+                <SelectTrigger id="create-category" className="field w-full">
+                  <SelectValue placeholder="Choose a category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -188,27 +144,27 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="edit-image" className="field-label">
-                Image URL
+              <Label htmlFor="create-image" className="field-label">
+                Poster URL
               </Label>
               <Input
-                id="edit-image"
+                id="create-image"
                 type="url"
                 placeholder="https://"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                value={poster_path}
+                onChange={(e) => setPoster_path(e.target.value)}
                 className="field"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="edit-description" className="field-label">
-                Description
+              <Label htmlFor="create-description" className="field-label">
+                Overview
               </Label>
               <Textarea
-                id="edit-description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                id="create-description"
+                value={overview}
+                onChange={(e) => setOverview(e.target.value)}
                 className="field h-auto! min-h-28 py-3"
               />
             </div>
@@ -237,7 +193,7 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
               />
               <Button type="submit" disabled={busy} className="btn-primary">
                 {busy && <LoaderCircle className="size-4.5 animate-spin" />}
-                {busy ? "Saving..." : "Save changes"}
+                {busy ? "Adding..." : "Add to my archive"}
               </Button>
             </div>
           </form>
@@ -247,4 +203,4 @@ function BookEdit({ favbookId, onUpdated }: BookEditProps) {
   );
 }
 
-export default BookEdit;
+export default MovieCreate;

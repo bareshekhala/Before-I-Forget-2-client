@@ -2,6 +2,8 @@
 //mood filtering
 //search
 import FavBooks from "@/components/book/FavBooks";
+import FavMovies from "@/components/movie/FavMovies";
+import FavSongs from "@/components/song/FavSongs";
 import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
 
 
@@ -27,10 +29,10 @@ function ArchivePage() {
         <FavBooks/>
       </TabsContent>
       <TabsContent value="Movies">
-        {/* <FavMovies/> */}
+        <FavMovies/>
       </TabsContent>
       <TabsContent value="Songs">
-        {/* <FavSongs/> */}
+        <FavSongs/>
       </TabsContent>
       {/* <TabsContent value="Websites">
         <FavBooks/>

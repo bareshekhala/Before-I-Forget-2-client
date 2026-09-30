@@ -23,7 +23,7 @@ import service from "@/services/service.index";
 import MoodChecked from "../forAll/MoodChecked";
 import React, { useState } from "react";
 import { Label } from "../ui/label";
-import { categories } from "../forAll/Categories";
+import { categories } from "./Categories";
 import Loader from "../Loader";
 
 type BookCreateProps = {
@@ -41,7 +41,7 @@ function BookCreate({ onCreated }: BookCreateProps) {
   const [moods, setMoods] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ function BookCreate({ onCreated }: BookCreateProps) {
       moods,
     };
     try {
-      await service.post("/books/favbooks", body);
+      await service.post("/books/favbooks", body)
       //with these we make the form empty agsin => when the user open the create form again, it will be empty -> otherwise it will be filled with the prev data
       setTitle("");
       setAuthor("");
