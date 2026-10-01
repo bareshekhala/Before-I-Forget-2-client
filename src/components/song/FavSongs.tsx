@@ -44,27 +44,27 @@ function FavSongs() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-ground dark:bg-night">
-        <div>
-          <Loader />
-        </div>
+      <div className="grid place-items-center py-24">
+        <Loader />
       </div>
     );
   }
   if (songs.length === 0) {
     return (
-      <>
-        <p className="text-soft">No songs in your archive yet.</p>
+      <div className="empty-box">
+        <p>No songs in your archive yet.</p>
         <SongCreate onCreated={getData} />
-      </>
+      </div>
     );
   }
   return (
     <>
-      <SongCreate onCreated={getData} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto justify-items-center gap-10 my-12">
+      <div className="mt-3 flex justify-end xl:absolute xl:top-0.5 xl:right-0 xl:mt-0">
+        <SongCreate onCreated={getData} />
+      </div>
+      <div className="grid gap-x-5 gap-y-6.5 pt-5 sm:grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]">
         {songs.map((song) => (
-          <div key={song.id} className="grid gap-3">
+          <div key={song.id} className="grid w-full max-w-85 content-start gap-2">
             <SongCard song={song} />
 
             <div className="flex gap-2">

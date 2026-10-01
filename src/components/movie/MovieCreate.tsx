@@ -23,7 +23,7 @@ import service from "@/services/service.index";
 import MoodChecked from "../forAll/MoodChecked";
 import React, { useState } from "react";
 import { Label } from "../ui/label";
-import { categories } from "../book/Categories";
+import { categories } from "../movie/Categories";
 import Loader from "../Loader";
 
 type MovieCreateProps = {

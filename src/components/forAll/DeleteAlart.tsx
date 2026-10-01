@@ -35,12 +35,18 @@ const handleDelete = async()=>{
 
   }catch(error){
     console.log(error)
+    setBusy(false)
   }
 }
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
-        render={<Button variant="destructive">{triggerButtonName}</Button>}
+        render={
+          <Button variant="destructive" className="btn-card btn-card-danger">
+            <Trash2Icon />
+            {triggerButtonName}
+          </Button>
+        }
       />
       <AlertDialogContent size="sm">
         <AlertDialogHeader>

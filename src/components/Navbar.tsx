@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { Archive, ChartColumn, SearchIcon, House, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "../context/auth.context";
@@ -19,7 +19,7 @@ function Navbar() {
   };
 
   const theLogoPart = (
-    <Link
+    <NavLink
       to="/"
       className="inline-flex items-center gap-2.5 rounded-lg px-1.5 py-1 text-ink dark:text-night-ink"
     >
@@ -28,7 +28,7 @@ function Navbar() {
       <span className="font-display text-xl leading-none font-[760] tracking-[-0.01em] whitespace-nowrap font-stretch-92%">
         Before I Forget
       </span>
-    </Link>
+    </NavLink>
   );
   //this part is identical in small and big screens
   const links = [
@@ -44,10 +44,10 @@ function Navbar() {
         {theLogoPart}
         <nav className="grid gap-0.5">
           {links.map((link) => (
-            <Link key={link.to} to={link.to} className="nav-link">
+            <NavLink key={link.to} to={link.to} className="nav-link">
               {link.icon}
               {link.label}
-            </Link>
+            </NavLink>
           ))}
         </nav>
 
@@ -65,12 +65,12 @@ function Navbar() {
               <LogOut />
             </Button>
           ) : (
-            <Link
+            <NavLink
               to="/login"
               className="btn-primary flex items-center justify-center"
             >
               Log in
-            </Link>
+            </NavLink>
           )}
         </div>
       </div>
@@ -91,9 +91,9 @@ function Navbar() {
             <LogOut />
           </Button>
         ) : (
-          <Link to="/login" className="text-link">
+          <NavLink to="/login" className="text-link">
             Log in
-          </Link>
+          </NavLink>
         )}
       </header>
 
@@ -101,10 +101,10 @@ function Navbar() {
         className="glass fixed inset-x-2.5 bottom-[calc(0.625rem+env(safe-area-inset-bottom))] z-30 grid grid-cols-4 p-1.5 lg:hidden"
       >
         {links.map((link) => (
-          <Link key={link.to} to={link.to} className="tab-link">
+          <NavLink key={link.to} to={link.to} className="tab-link">
             {link.icon}
             {link.label}
-          </Link>
+          </NavLink>
         ))}
       </nav>
     </>

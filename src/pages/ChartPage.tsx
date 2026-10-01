@@ -88,6 +88,9 @@ function Chart() {
 
     return { mood: mood.name, count };
   });
+if (allData.length === 0) {
+  return <p>You have not added anything yet.</p>;
+}
 
 
   if (isLoading) {

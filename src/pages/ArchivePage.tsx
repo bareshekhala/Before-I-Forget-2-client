@@ -9,19 +9,25 @@ import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
 
 function ArchivePage() {
   return (
-<div className=" flex w-full flex-col md:flex-row relative z-10">
-    <Tabs className="" defaultValue="All">
-      <TabsList className="glass mx-auto max-w-200 mt-40">
-        <TabsTrigger  value="All">All</TabsTrigger>
-        <TabsTrigger value="Books">Books</TabsTrigger>
-        <TabsTrigger value="Movies">Movies</TabsTrigger>
-        <TabsTrigger value="Songs">Songs</TabsTrigger>
-        <TabsTrigger value="Websites">Websites</TabsTrigger>
-        <TabsTrigger value="Memories">Memories</TabsTrigger>
-        <TabsTrigger value="Dreams">Dreams</TabsTrigger>
-        <TabsTrigger value="Thoughts">Thoughts</TabsTrigger>
+<div className="mx-auto box-content max-w-295 px-4 pt-4.5 pb-6 lg:px-10 lg:pt-6.5 lg:pb-16">
+  
+    <div className="app-backdrop"  />
+
+    <h1 className="mb-6 font-display text-[1.75rem] leading-none font-[740] tracking-[-0.02em] text-ink lg:text-[2.125rem] dark:text-night-ink">
+      Archive
+    </h1>
+    <Tabs className="relative" defaultValue="All">
+      <TabsList className="seg">
+        <TabsTrigger className="seg-item" value="All">All</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Books">Books</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Movies">Movies</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Songs">Songs</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Websites">Websites</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Memories">Memories</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Dreams">Dreams</TabsTrigger>
+        <TabsTrigger className="seg-item" value="Thoughts">Thoughts</TabsTrigger>
       </TabsList>
-      <div className="min-h-screen">
+      <div>
       <TabsContent value="All">
         <FavBooks/>
       </TabsContent>

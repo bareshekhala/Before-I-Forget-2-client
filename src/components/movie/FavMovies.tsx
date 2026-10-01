@@ -44,31 +44,34 @@ function FavMovies() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-ground dark:bg-night">
-        <div>
-          <Loader />
-        </div>
+      <div className="grid place-items-center py-24">
+        <Loader />
       </div>
     );
   }
   if (Movies.length === 0) {
     return (
-      <>
-        <p className="text-soft">No Movie in your archive yet.</p>
+      <div className="empty-box">
+        <p>No Movie in your archive yet.</p>
         <MovieCreate onCreated={getData} />
-      </>
+      </div>
     );
   }
   return (
     <>
-      <MovieCreate onCreated={getData} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto justify-items-center gap-10 my-12 overflow-hidden">
+      <div className="mt-3 flex justify-end xl:absolute xl:top-0.5 xl:right-0 xl:mt-0">
+        <MovieCreate onCreated={getData} />
+      </div>
+
+      <div className="card-grid">
         {Movies.map((movie) => (
-          <div key={movie.id}>
+          <div key={movie.id} className="grid w-full max-w-56 content-start gap-2">
             <MovieCard movie={movie} />
 
-            <MovieEdit favmovieId={movie.id} onUpdated={getData} />
-            <DeleteAlart onDelete={() => handleDelete(movie.id)} />
+            <div className="flex gap-2">
+              <MovieEdit favmovieId={movie.id} onUpdated={getData} />
+              <DeleteAlart onDelete={() => handleDelete(movie.id)} />
+            </div>
           </div>
         ))}
       </div>

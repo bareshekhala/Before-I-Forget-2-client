@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CircleAlert, LoaderCircle } from "lucide-react";
+import { CircleAlert, LoaderCircle, Pencil } from "lucide-react";
 import Loader from "../Loader";
 import {
   Dialog,
@@ -109,7 +109,14 @@ const getData = async () => {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger render={<Button variant="outline">Edit</Button>} />
+      <DialogTrigger
+        render={
+          <Button variant="outline" className="btn-card">
+            <Pencil />
+            Edit
+          </Button>
+        }
+      />
 
       <DialogContent className="max-h-[calc(100svh-2rem)] gap-5 overflow-y-auto rounded-3xl bg-white p-6 text-ink sm:max-w-lg sm:p-8 dark:bg-night-surface dark:text-night-ink">
         <DialogHeader>

@@ -239,7 +239,7 @@
     }
 }
 
-/*  (phones) */
+/*  phones */
 .tab-link {
     @apply grid min-h-13 content-center justify-items-center gap-0.5 rounded-2xl px-0.5 py-1.5 text-xs font-semibold text-ink-soft;
     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt;
@@ -266,5 +266,109 @@
 
     .dark &.active svg {
         @apply text-night-cobalt;
+    }
+}
+
+
+/* archive */
+.app-backdrop {
+    @apply pointer-events-none fixed inset-0 -z-10 bg-ground;
+    background-image:
+        radial-gradient(44% 560px at 6% 140px, rgb(139 201 240 / 0.45), transparent 70%),
+        radial-gradient(38% 520px at 96% 260px, rgb(240 169 30 / 0.2), transparent 70%),
+        radial-gradient(46% 600px at 60% 100%, rgb(29 79 215 / 0.14), transparent 70%),
+        radial-gradient(40% 560px at 8% 90%, rgb(248 205 220 / 0.3), transparent 70%);
+
+    .dark & {
+        @apply bg-night;
+        background-image:
+            radial-gradient(44% 560px at 6% 140px, rgb(29 79 215 / 0.32), transparent 70%),
+            radial-gradient(38% 520px at 96% 260px, rgb(244 194 74 / 0.1), transparent 70%),
+            radial-gradient(46% 600px at 60% 100%, rgb(122 91 180 / 0.22), transparent 70%),
+            radial-gradient(40% 560px at 8% 90%, rgb(27 46 158 / 0.32), transparent 70%);
+    }
+}
+
+/*  -> for TabsList */
+.seg {
+    @apply h-auto w-fit max-w-full flex-wrap justify-start gap-0.5 rounded-[14px] border border-cobalt/15 bg-cobalt/8 p-[3px];
+
+    .dark & {
+        @apply border-night-cobalt/15 bg-night-surface/60;
+    }
+}
+
+/* -> for TabsTrigger */
+.seg-item {
+    @apply h-auto min-h-11 flex-none rounded-[11px] px-2.5 text-[14.5px] font-semibold text-ink-soft hover:text-ink sm:px-3.5;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-cobalt;
+
+    &[aria-selected="true"] {
+        @apply bg-white text-ink shadow-xs ring-1 ring-cobalt/15;
+    }
+
+    .dark & {
+        @apply text-night-ink-soft hover:text-night-ink focus-visible:outline-night-cobalt;
+    }
+
+    .dark &[aria-selected="true"] {
+        @apply bg-night-surface text-night-ink ring-white/10;
+    }
+}
+
+.card-grid {
+    @apply grid grid-cols-2 gap-x-3.5 gap-y-5 pt-5 sm:grid-cols-[repeat(auto-fill,minmax(168px,1fr))] sm:gap-x-5 sm:gap-y-6.5;
+}
+
+/*  when there is no image */
+.card-stage {
+    @apply grid aspect-5/6 w-full place-items-center overflow-hidden rounded-2xl border border-white/80 bg-white/40 text-ink-soft transition-colors group-hover:border-ink-soft/60;
+
+    & img {
+        @apply size-full object-cover;
+    }
+
+    .dark & {
+        @apply border-white/15 bg-night-surface/40 text-night-ink-soft group-hover:border-night-ink-soft/60;
+    }
+}
+
+/* mood label */
+.mood-pill {
+    @apply inline-flex items-center rounded-[7px] border-[1.5px] border-current bg-cobalt/9 px-2 pt-1 pb-[3px] font-display text-xs leading-none font-[780] tracking-[0.08em] text-cobalt uppercase font-stretch-[66%];
+
+    .dark & {
+        @apply bg-night-cobalt/10 text-night-cobalt;
+    }
+}
+
+/* Edit button */
+.btn-card {
+    @apply h-11 flex-1 gap-1 rounded-full border border-ink-soft/60 bg-white px-2 text-[13px] font-semibold text-ink hover:border-ink hover:bg-white;
+
+    & svg {
+        @apply size-3.5;
+    }
+
+    .dark & {
+        @apply border-night-ink-soft/50 bg-night-surface text-night-ink hover:border-night-ink hover:bg-night-surface;
+    }
+}
+
+/* Delete button  */
+.btn-card-danger {
+    @apply border-transparent bg-transparent text-danger hover:border-transparent hover:bg-danger/10;
+
+    .dark & {
+        @apply border-transparent bg-transparent text-night-danger hover:border-transparent hover:bg-night-danger/15;
+    }
+}
+
+/* the box we show when a shelf is empty */
+.empty-box {
+    @apply mt-5 grid max-w-xl justify-items-start gap-3 rounded-[20px] border border-dashed border-ink-soft/60 p-7 text-lg font-bold text-ink;
+
+    .dark & {
+        @apply border-night-ink-soft/50 text-night-ink;
     }
 }

@@ -6,6 +6,7 @@ import DiscoverPage from "./pages/DiscoverPage";
 import Navbar from "./components/Navbar";
 import Chart from "./pages/ChartPage";
 import { AuthContext } from "./context/auth.context";
+import OnlyPrivate from "./components/auth/OnlyPrivate";
 import { useContext } from "react";
 function App() {
   const auth = useContext(AuthContext);
@@ -17,9 +18,9 @@ function App() {
           {/* <Route path="/" element={<LandingPage />} /> */}
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />
-          <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/discover" element={<DiscoverPage />} />
-          <Route path="/chart" element={<Chart />} />
+          <Route path="/archive" element={<OnlyPrivate><ArchivePage /></OnlyPrivate>} />
+          <Route path="/discover" element={<OnlyPrivate><DiscoverPage /></OnlyPrivate>} />
+         <Route path="/chart" element={ <OnlyPrivate><Chart /></OnlyPrivate>} />
         </Routes>
       </main>
     </div>

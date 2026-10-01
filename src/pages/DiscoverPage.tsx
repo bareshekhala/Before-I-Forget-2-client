@@ -5,7 +5,7 @@ function DiscoverPage() {
   return (
     <div>
           <Tabs className="" defaultValue="By Mood">
-      <TabsList className="glass mx-auto w-full max-w-200 justify-start overflow-x-auto mt-40">
+      <TabsList className="glass mx-auto w-full max-w-200 mt-40">
         <TabsTrigger  value="Mood">By Mood</TabsTrigger>
         <TabsTrigger value="Category">By Category</TabsTrigger>
       </TabsList>
