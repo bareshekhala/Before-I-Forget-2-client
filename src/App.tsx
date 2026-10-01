@@ -5,6 +5,7 @@ import ArchivePage from "./pages/ArchivePage";
 import DiscoverPage from "./pages/DiscoverPage";
 import Navbar from "./components/Navbar";
 import Chart from "./pages/ChartPage";
+import UserDashboardPage from "./pages/UserDashboardPage";
 import { AuthContext } from "./context/auth.context";
 import OnlyPrivate from "./components/auth/OnlyPrivate";
 import { useContext } from "react";
@@ -16,6 +17,7 @@ function App() {
       <main className="min-w-0 flex-1 pb-24 lg:pb-0">
         <Routes>
           {/* <Route path="/" element={<LandingPage />} /> */}
+          <Route path="/" element={<OnlyPrivate><UserDashboardPage /></OnlyPrivate>} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />
           <Route path="/archive" element={<OnlyPrivate><ArchivePage /></OnlyPrivate>} />

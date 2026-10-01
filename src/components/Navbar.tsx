@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { Archive, ChartColumn, SearchIcon, House, LogOut } from "lucide-react";
+import { Archive, ChartColumn, SearchIcon, House, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "../context/auth.context";
 import logo from "../assets/logo.svg";
 import logoNight from "../assets/logo-night.svg";
-
-
+import { ThemeContext } from "@/context/theme.context";
 function Navbar() {
   const auth = useContext(AuthContext);
+  const theme = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -38,6 +38,19 @@ function Navbar() {
   { to: "/chart", label: "Mood chart", icon: <ChartColumn /> },
 ];
 
+const themeButton = (
+  <Button
+    type="button"
+    variant="ghost"
+    size="icon"
+    onClick={theme?.toggleTheme}
+    title="Day or night"
+    className="text-soft"
+  >
+    {theme?.isDark ? <Sun /> : <Moon />}
+  </Button>
+);
+
   return (
     <>
       <div className="glass sticky top-3 m-3 mr-0 hidden h-[calc(100svh-1.5rem)] w-60 shrink-0 flex-col gap-5.5 px-3.5 pt-5 pb-4 lg:flex">
@@ -52,6 +65,7 @@ function Navbar() {
         </nav>
 
         <div className="mt-auto flex items-center gap-2.5 border-t border-ink/10 px-1.5 pt-3.5 dark:border-white/10">
+          {themeButton}
           {auth?.user ? (
             <Button
               type="button"
@@ -63,6 +77,7 @@ function Navbar() {
               className="text-soft"
             >
               <LogOut />
+              
             </Button>
           ) : (
             <NavLink
@@ -78,23 +93,26 @@ function Navbar() {
       {/* small screens */}
       <header className="flex items-center justify-between px-4 pt-4 lg:hidden">
         {theLogoPart}
-        {auth?.user ? (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={handleLogout}
-            aria-label="Log out"
-            title="Log out"
-            className="text-soft"
-          >
-            <LogOut />
-          </Button>
-        ) : (
-          <NavLink to="/login" className="text-link">
-            Log in
-          </NavLink>
-        )}
+        <div className="flex items-center gap-1">
+          {themeButton}
+          {auth?.user ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={handleLogout}
+              aria-label="Log out"
+              title="Log out"
+              className="text-soft"
+            >
+              <LogOut />
+            </Button>
+          ) : (
+            <NavLink to="/login" className="text-link">
+              Log in
+            </NavLink>
+          )}
+        </div>
       </header>
 
       <nav

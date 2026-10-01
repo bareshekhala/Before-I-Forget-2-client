@@ -1,9 +1,8 @@
-//with tabs-> all/books/movies/songs/dreams/thoughts/memories
-//mood filtering
-//search
+
 import FavBooks from "@/components/book/FavBooks";
 import FavMovies from "@/components/movie/FavMovies";
 import FavSongs from "@/components/song/FavSongs";
+import MyMinds from "@/components/mymind/MyMinds";
 import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
 
 
@@ -38,9 +37,18 @@ function ArchivePage() {
       <TabsContent value="Songs">
         <FavSongs/>
       </TabsContent>
-      {/* <TabsContent value="Websites">
-        <FavBooks/>
-      </TabsContent> */}
+      <TabsContent value="Websites">
+        <MyMinds category="WEBSITE" name="website" path="websites"/>
+      </TabsContent>
+      <TabsContent value="Memories">
+        <MyMinds category="MEMORY" name="memory" path="memories"/>
+      </TabsContent>
+      <TabsContent value="Dreams">
+        <MyMinds category="DREAM" name="dream" path="dreams"/>
+      </TabsContent>
+      <TabsContent value="Thoughts">
+        <MyMinds category="THOUGHT" name="thought" path="thoughts"/>
+      </TabsContent>
 </div>
     </Tabs>
     </div>
