@@ -4,10 +4,11 @@ import SignUpPage from "./pages/SignUpPage";
 import ArchivePage from "./pages/ArchivePage";
 import DiscoverPage from "./pages/DiscoverPage";
 import Navbar from "./components/Navbar";
+import Chart from "./pages/ChartPage";
 import { AuthContext } from "./context/auth.context";
 import { useContext } from "react";
 function App() {
-  const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext);
   return (
     <div className="min-h-screen lg:flex">
       {auth?.user && <Navbar />}
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<LogInPage />} />
           <Route path="/archive" element={<ArchivePage />} />
           <Route path="/discover" element={<DiscoverPage />} />
+          <Route path="/chart" element={<Chart />} />
         </Routes>
       </main>
     </div>
