@@ -4,7 +4,7 @@ import DiscoverSearchBar from "./DiscoverSearchBar";
 import SongCard from "../song/SongCard";
 import BookCard from "../book/BookCard";
 import MovieCard from "../movie/MovieCard";
-import { PlusIcon, Check } from "lucide-react";
+import { PlusIcon, Check, Shuffle } from "lucide-react";
 
 type Book = {
   id: string;
@@ -101,6 +101,26 @@ function DiscoverM({ shelf }: DiscoverMProps) {
       console.log(error);
     }
   };
+//if the user wants a random suggestion
+  const handleSurprise = async () => {
+    setMood("");
+    setQuery("");
+    try {
+      const response1 = await service.get("/books");
+      const response2 = await service.get("/movies");
+      const response3 = await service.get("/songs");
+
+      const randomBook = response1.data[Math.floor(Math.random() * response1.data.length)];
+      const randomMovie = response2.data[Math.floor(Math.random() * response2.data.length)];
+      const randomSong = response3.data[Math.floor(Math.random() * response3.data.length)];
+
+      setSuggestions1([randomBook]);
+      setSuggestions2([randomMovie]);
+      setSuggestions3([randomSong]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   //so with this user can add sth in the database to her archive
   const handlePicked = async (picked: Book | Movie | Song) => {
@@ -169,7 +189,16 @@ function DiscoverM({ shelf }: DiscoverMProps) {
               Select a Mood to Discover What You Might Need Right Now
             </p>
           </div>
-          <DiscoverSearchBar query={query} setQuery={setQuery} />
+          <div className="flex w-full gap-3 sm:w-auto">
+            <DiscoverSearchBar query={query} setQuery={setQuery} />
+            <button
+              onClick={handleSurprise}
+              className="flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-ink-soft/60 bg-white px-4 text-[14.5px] font-semibold text-ink hover:border-ink dark:border-night-ink-soft/50 dark:bg-night-surface dark:text-night-ink dark:hover:border-night-ink"
+            >
+              <Shuffle className="size-4.5" />
+              Surprise me
+            </button>
+          </div>
         </div>
 
         {shelf !== "Songs" && (

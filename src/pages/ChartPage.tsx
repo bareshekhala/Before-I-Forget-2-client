@@ -48,7 +48,7 @@ function Chart() {
   const [books, setBooks] = useState<Book[]>([]);
   const [moods, setMoods] = useState<Mood[]>([]);
   //   const [thoughts, setThoughts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -70,6 +70,7 @@ function Chart() {
         }, 1500);
       } catch (error) {
         console.log(error);
+        setIsLoading(false)
       }
     };
     getData();
@@ -88,9 +89,7 @@ function Chart() {
 
     return { mood: mood.name, count };
   });
-if (allData.length === 0) {
-  return <p>You have not added anything yet.</p>;
-}
+
 
 
   if (isLoading) {

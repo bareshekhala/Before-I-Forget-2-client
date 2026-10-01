@@ -18,7 +18,6 @@ function ArchivePage() {
     </h1>
     <Tabs className="relative" defaultValue="All">
       <TabsList className="seg">
-        <TabsTrigger className="seg-item" value="All">All</TabsTrigger>
         <TabsTrigger className="seg-item" value="Books">Books</TabsTrigger>
         <TabsTrigger className="seg-item" value="Movies">Movies</TabsTrigger>
         <TabsTrigger className="seg-item" value="Songs">Songs</TabsTrigger>
@@ -28,9 +27,8 @@ function ArchivePage() {
         <TabsTrigger className="seg-item" value="Thoughts">Thoughts</TabsTrigger>
       </TabsList>
       <div>
-      <TabsContent value="All">
-        <FavBooks/>
-      </TabsContent>
+
+
       <TabsContent value="Books">
         <FavBooks/>
       </TabsContent>
