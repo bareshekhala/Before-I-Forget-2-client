@@ -5,6 +5,7 @@ import SongCard from "../song/SongCard";
 import BookCard from "../book/BookCard";
 import MovieCard from "../movie/MovieCard";
 import { PlusIcon, Check, Shuffle } from "lucide-react";
+import Loader from "../Loader";
 
 type Book = {
   id: string;
@@ -51,13 +52,14 @@ function DiscoverM({ shelf }: DiscoverMProps) {
   const [query, setQuery] = useState("");
   const [mood, setMood] = useState("");
   const [favTitles, setFavTitles] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   //getting the moods
   useEffect(() => {
     const getMoods = async () => {
       try {
         const response = await service.get("/moods");
         setMoods(response.data);
-
+        setIsLoading(false);
         const response2 = await service.get("/books/favbooks");
         const response3 = await service.get("/movies/favmovies");
         const response4 = await service.get("/songs/favsongs");
@@ -68,6 +70,7 @@ function DiscoverM({ shelf }: DiscoverMProps) {
         ]);
       } catch (error) {
         console.log(error);
+        setIsLoading(false);
       }
     };
 
@@ -162,6 +165,13 @@ function DiscoverM({ shelf }: DiscoverMProps) {
     }
   };
 
+  if (isLoading) {
+  return (
+    <div className="grid place-items-center py-24">
+      <Loader />
+    </div>
+  );
+}
   return (
     <div className="grid items-start gap-5 lg:grid-cols-[236px_minmax(0,1fr)] lg:gap-8">
       <div className="glass flex flex-wrap gap-1 p-2.5 lg:sticky lg:top-4 lg:grid lg:max-h-[calc(100svh-2rem)] lg:gap-0.5 lg:overflow-y-auto">

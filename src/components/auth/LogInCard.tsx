@@ -31,7 +31,7 @@ function LogInCard() {
         setErrorMessage(error.message);
         return;
       }
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log(error);
       setBusy(false);

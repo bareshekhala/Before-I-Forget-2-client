@@ -6,6 +6,7 @@ import { AuthContext } from "../context/auth.context";
 import logo from "../assets/logo.svg";
 import logoNight from "../assets/logo-night.svg";
 import { ThemeContext } from "@/context/theme.context";
+import Footer from "./Footer";
 function Navbar() {
   const auth = useContext(AuthContext);
   const theme = useContext(ThemeContext);
@@ -64,7 +65,7 @@ const themeButton = (
           ))}
         </nav>
 
-        <div className="mt-auto flex items-center gap-2.5 border-t border-ink/10 px-1.5 pt-3.5 dark:border-white/10">
+        <div className="mt-auto flex items-center gap-2.5 border-t border-ink/10 px-1.5 pt-1 dark:border-white/10">
           {themeButton}
           {auth?.user ? (
             <Button
@@ -88,7 +89,11 @@ const themeButton = (
             </NavLink>
           )}
         </div>
+        <div className="mt-112">
+  <Footer/>
+</div>
       </div>
+      
 
       {/* small screens */}
       <header className="flex items-center justify-between px-4 pt-4 lg:hidden">
