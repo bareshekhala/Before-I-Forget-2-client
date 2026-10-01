@@ -9,9 +9,9 @@ import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
 
 function ArchivePage() {
   return (
-<div className=" ">
+<div className=" flex w-full flex-col md:flex-row relative z-10">
     <Tabs className="" defaultValue="All">
-      <TabsList className="glass mx-auto w-200 mt-40">
+      <TabsList className="glass mx-auto max-w-200 mt-40">
         <TabsTrigger  value="All">All</TabsTrigger>
         <TabsTrigger value="Books">Books</TabsTrigger>
         <TabsTrigger value="Movies">Movies</TabsTrigger>

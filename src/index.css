@@ -206,3 +206,65 @@
         @apply text-night-success;
     }
 }
+
+
+/* navbar */
+
+.nav-link {
+    @apply flex min-h-11 items-center gap-3 rounded-xl px-3 text-[15px] font-semibold text-ink-soft transition-colors;
+    @apply hover:bg-ink/6 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt;
+
+    & svg {
+        @apply size-5;
+    }
+
+    &.active {
+        @apply bg-white text-ink shadow-xs ring-1 ring-ink/10;
+    }
+
+    &.active svg {
+        @apply text-cobalt;
+    }
+
+    .dark & {
+        @apply text-night-ink-soft hover:bg-white/6 hover:text-night-ink focus-visible:outline-night-cobalt;
+    }
+
+    .dark &.active {
+        @apply bg-night-surface text-night-ink ring-white/10;
+    }
+
+    .dark &.active svg {
+        @apply text-night-cobalt;
+    }
+}
+
+/*  (phones) */
+.tab-link {
+    @apply grid min-h-13 content-center justify-items-center gap-0.5 rounded-2xl px-0.5 py-1.5 text-xs font-semibold text-ink-soft;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt;
+
+    & svg {
+        @apply size-5.5;
+    }
+
+    &.active {
+        @apply bg-white text-ink shadow-xs ring-1 ring-ink/10;
+    }
+
+    &.active svg {
+        @apply text-cobalt;
+    }
+
+    .dark & {
+        @apply text-night-ink-soft focus-visible:outline-night-cobalt;
+    }
+
+    .dark &.active {
+        @apply bg-night-surface text-night-ink ring-white/10;
+    }
+
+    .dark &.active svg {
+        @apply text-night-cobalt;
+    }
+}
