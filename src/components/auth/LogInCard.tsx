@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { supabase } from "../../lib/superBaseClient";
 import { Input } from "../../components/ui/input.jsx";
 import { Label } from "../../components/ui/label.jsx";
@@ -14,8 +14,7 @@ function LogInCard() {
 
   const navigate = useNavigate();
 
-
-  const handleLogin = async (e:React.SubmitEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setBusy(true);
     setErrorMessage(null);
@@ -39,6 +38,15 @@ function LogInCard() {
     }
   };
 
+  const handleGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
+    if (error) {
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <div className="glass grid w-full max-w-md gap-6 p-6 sm:p-10">
@@ -80,8 +88,11 @@ function LogInCard() {
         </div>
 
         <Button type="submit" disabled={busy} className="btn-primary">
-          {busy && <LoaderCircle className="size-4.5 animate-spin"  />}
+          {busy && <LoaderCircle className="size-4.5 animate-spin" />}
           {busy ? "Signing in..." : "Sign in"}
+        </Button>
+        <Button type="button" onClick={handleGoogle}>
+          Continue with Google
         </Button>
 
         {errorMessage && (
