@@ -1,9 +1,10 @@
-import { useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import DiscoverSearchBar from "./DiscoverSearchBar";
 import BookCard from "../book/BookCard";
 import MovieCard from "../movie/MovieCard";
 import service from "@/services/service.index";
 import { categories } from "../book/Categories";
+import { PlusIcon, Check } from "lucide-react";
 
 type Book = {
   id: string;
@@ -32,11 +33,28 @@ type DiscoveredPageCategoryProps = {
 function DiscoveredPageCategory({ shelf }: DiscoveredPageCategoryProps) {
   const [suggestions1, setSuggestions1] = useState<Book[]>([]);
   const [suggestions2, setSuggestions2] = useState<Movie[]>([]);
-  const [suggestions11, setSuggestions11] = useState<Book[]>([]);
-  const [suggestions22, setSuggestions22] = useState<Movie[]>([]);
+
 
   const [category, setCategory] = useState("");
   const [query, setQuery] = useState("");
+  const [favTitles, setFavTitles] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getFavTitles = async () => {
+      try {
+        const response1 = await service.get("/books/favbooks");
+        const response2 = await service.get("/movies/favmovies");
+        setFavTitles([
+          ...response1.data.map((book: Book) => book.title),
+          ...response2.data.map((movie: Movie) => movie.title),
+        ]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getFavTitles();
+  }, []);
 
   const handleCategory = async (e: MouseEvent<HTMLButtonElement>) => {
     const selectedCategory = e.currentTarget.value;
@@ -45,32 +63,46 @@ function DiscoveredPageCategory({ shelf }: DiscoveredPageCategoryProps) {
 
     try {
       const response1 = await service.get("/books");
-      const response11 = await service.get("/books/favbooks");
-
       const response2 = await service.get("/movies");
-      const response22 = await service.get("/movies/favmovies");
 
       const result1 = response1.data.filter((book: Book) => {
         return book.category.toLowerCase() === selectedCategory;
       });
-
-      const result11 = response11.data.filter((book: Book) => {
-        return book.category.toLowerCase() === selectedCategory;
-      });
-
       const result2 = response2.data.filter((movie: Movie) => {
         return movie.category.toLowerCase() === selectedCategory;
       });
 
-      const result22 = response22.data.filter((movie: Movie) => {
-        return movie.category.toLowerCase() === selectedCategory;
-      });
-
       setSuggestions1(result1);
-      setSuggestions11(result11);
-
       setSuggestions2(result2);
-      setSuggestions22(result22);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePicked = async (picked: Book | Movie) => {
+    try {
+      if ("author" in picked) {
+        await service.post("/books/favbooks", {
+          title: picked.title,
+          author: picked.author,
+          description: picked.description,
+          image: picked.image,
+          category: picked.category,
+          pageCount: picked.pageCount,
+          moods: picked.moods.map((mood) => mood.name),
+        });
+        setFavTitles((prev) => [...prev, picked.title]);
+      }
+      if ("overview" in picked) {
+        await service.post("/movies/favmovies", {
+          title: picked.title,
+          overview: picked.overview,
+          poster_path: picked.poster_path,
+          category: picked.category,
+          moods: picked.moods.map((mood) => mood.name),
+        });
+        setFavTitles((prev) => [...prev, picked.title]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -122,10 +154,23 @@ function DiscoveredPageCategory({ shelf }: DiscoveredPageCategoryProps) {
                   .includes(query.toLowerCase())
               )
               .map((book) => (
-                <BookCard
-                  key={book.id}
-                  book={book}
-                />
+                <div key={book.id} className="relative w-full max-w-56">
+                  <button
+                    type="button"
+                    disabled={favTitles.includes(book.title)}
+                    title="Add to favorites"
+                    onClick={() => handlePicked(book)}
+                    className="absolute top-2 right-2 z-20 grid size-9 place-items-center rounded-full bg-white shadow-md dark:bg-night-surface"
+                  >
+                    {favTitles.includes(book.title) ? (
+                      <Check className="size-5 text-green-500" />
+                    ) : (
+                      <PlusIcon className="size-5" />
+                    )}
+                  </button>
+
+                  <BookCard book={book} />
+                </div>
               ))}
 
           {(shelf === "All" || shelf === "Movies") &&
@@ -136,48 +181,23 @@ function DiscoveredPageCategory({ shelf }: DiscoveredPageCategoryProps) {
                   .includes(query.toLowerCase())
               )
               .map((movie) => (
-                <MovieCard
-                  key={movie.id}
-                  movie={movie}
-                />
-              ))}
+                <div key={movie.id} className="relative w-full max-w-56">
+                  <button
+                    type="button"
+                    disabled={favTitles.includes(movie.title)}
+                    title="Add to favorites"
+                    onClick={() => handlePicked(movie)}
+                    className="absolute top-2 right-2 z-20 grid size-9 place-items-center rounded-full bg-white shadow-md dark:bg-night-surface"
+                  >
+                    {favTitles.includes(movie.title) ? (
+                      <Check className="size-5 text-green-500" />
+                    ) : (
+                      <PlusIcon className="size-5" />
+                    )}
+                  </button>
 
-          {(shelf === "All" || shelf === "Books") &&
-            suggestions11
-              .filter((fbook) => {
-                return (
-                  !suggestions1.some(
-                    (book) => book.id === fbook.id
-                  ) &&
-                  fbook.title
-                    .toLowerCase()
-                    .includes(query.toLowerCase())
-                );
-              })
-              .map((fbook) => (
-                <BookCard
-                  key={fbook.id}
-                  book={fbook}
-                />
-              ))}
-
-          {(shelf === "All" || shelf === "Movies") &&
-            suggestions22
-              .filter((fmovie) => {
-                return (
-                  !suggestions2.some(
-                    (movie) => movie.id === fmovie.id
-                  ) &&
-                  fmovie.title
-                    .toLowerCase()
-                    .includes(query.toLowerCase())
-                );
-              })
-              .map((fmovie) => (
-                <MovieCard
-                  key={fmovie.id}
-                  movie={fmovie}
-                />
+                  <MovieCard movie={movie} />
+                </div>
               ))}
 
         </div>
