@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import { Search } from "lucide-react";
 
 type DiscoverSearchBarProps = {
   query: string;
@@ -10,13 +11,14 @@ function DiscoverSearchBar({ query, setQuery }: DiscoverSearchBarProps) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full sm:w-64">
+      <Search className="text-soft pointer-events-none absolute top-1/2 left-3.5 size-4.5 -translate-y-1/2" />
       <input
         type="search"
         value={query}
         onChange={handleSearch}
         placeholder="Search..."
-        className="w-34 md:w-70 px-6 form m-3 h-15 mt-5"
+        className="field w-full pl-10! outline-none"
       />
     </div>
   );

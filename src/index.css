@@ -211,7 +211,7 @@
 /* navbar */
 
 .nav-link {
-    @apply flex min-h-11 items-center gap-3 rounded-xl px-3 text-[15px] font-semibold text-ink-soft transition-colors;
+    @apply flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 text-[15px] font-semibold text-ink-soft transition-colors;
     @apply hover:bg-ink/6 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt;
 
     & svg {
@@ -291,7 +291,7 @@
 
 /*  -> for TabsList */
 .seg {
-    @apply h-auto w-fit max-w-full flex-wrap justify-start gap-0.5 rounded-[14px] border border-cobalt/15 bg-cobalt/8 p-[3px];
+    @apply flex h-auto w-fit max-w-full flex-wrap items-center justify-start gap-0.5 rounded-[14px] border border-cobalt/15 bg-cobalt/8 p-[3px];
 
     .dark & {
         @apply border-night-cobalt/15 bg-night-surface/60;
@@ -300,10 +300,11 @@
 
 /* -> for TabsTrigger */
 .seg-item {
-    @apply h-auto min-h-11 flex-none rounded-[11px] px-2.5 text-[14.5px] font-semibold text-ink-soft hover:text-ink sm:px-3.5;
+    @apply h-auto min-h-11 flex-none cursor-pointer rounded-[11px] px-2.5 text-[14.5px] font-semibold text-ink-soft hover:text-ink sm:px-3.5;
     @apply focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-cobalt;
 
-    &[aria-selected="true"] {
+    &[aria-selected="true"],
+    &.active {
         @apply bg-white text-ink shadow-xs ring-1 ring-cobalt/15;
     }
 
@@ -311,7 +312,8 @@
         @apply text-night-ink-soft hover:text-night-ink focus-visible:outline-night-cobalt;
     }
 
-    .dark &[aria-selected="true"] {
+    .dark &[aria-selected="true"],
+    .dark &.active {
         @apply bg-night-surface text-night-ink ring-white/10;
     }
 }
