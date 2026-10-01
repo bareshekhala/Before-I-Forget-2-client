@@ -1,5 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs"
-
+import DiscoverM from "@/components/discover/ByMood"
+import DiscoveredPageCategory from "@/components/discover/ByCategory"
 function DiscoverPage() {
   return (
     <div>
@@ -10,10 +11,10 @@ function DiscoverPage() {
       </TabsList>
       <div className="min-h-screen">
       <TabsContent value="Mood">
-        {/* <FavBooks/> */}
+        <DiscoverM/>
       </TabsContent>
       <TabsContent value="Category">
-        {/* <FavBooks/> */}
+        <DiscoveredPageCategory/>
       </TabsContent>
 </div>
     </Tabs>
